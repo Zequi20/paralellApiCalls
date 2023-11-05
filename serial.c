@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <curl/curl.h>
 #include <string.h>
-#include <omp.h>
 #define NUM_URLS 5
 
 size_t writeCallback(void *contents, size_t size, size_t nmemb, char **output);
@@ -19,12 +18,10 @@ char **getMultipleApiData()
         "https://pokeapi.co/api/v2/location/1/"};
 
     char **responses = (char **)malloc(NUM_URLS * sizeof(char *));
-
     for (int i = 0; i < NUM_URLS; i++)
     {
         responses[i] = getApiData(urls[i]);
     }
-
     return responses;
 }
 
@@ -79,7 +76,6 @@ size_t writeCallback(void *contents, size_t size, size_t nmemb, char **output)
 {
     size_t totalSize = size * nmemb;
     *output = (char *)malloc(totalSize + 1);
-
     if (*output)
     {
         memcpy(*output, contents, totalSize);
@@ -94,15 +90,11 @@ size_t writeCallback(void *contents, size_t size, size_t nmemb, char **output)
 
 int main()
 {
-    double inicio;
-    double fin;
-    inicio = omp_get_wtime();//utilizar time.h en codigo secuencial
-    
+    double start_time = time(NULL);
     char **responses = getMultipleApiData();
     saveApiData(responses);
     free(responses);
-
-    fin = omp_get_wtime();
-    printf("La ejecucion ha tomado %f segundos\n", fin - inicio);
+    double end_time = time(NULL);
+    printf("La ejecucion ha tomado %f segundos\n", end_time - start_time);
     return 0;
 }
