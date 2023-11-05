@@ -33,31 +33,22 @@ char *getApiData(const char *url)
     CURL *curl;
     CURLcode res;
     char *response = NULL;
-
     curl_global_init(CURL_GLOBAL_ALL);
-
     curl = curl_easy_init();
     if (curl)
     {
         curl_easy_setopt(curl, CURLOPT_URL, url);
-
         response = NULL;
-
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
-
         res = curl_easy_perform(curl);
-
         if (res != CURLE_OK)
         {
             fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
         }
-
         curl_easy_cleanup(curl);
     }
-
     curl_global_cleanup();
-
     return response;
 }
 
@@ -69,7 +60,6 @@ void saveApiData(char **responses)
         {
             char filename[100];
             snprintf(filename, sizeof(filename), "response%d.json", i + 1);
-
             FILE *file = fopen(filename, "w");
             if (file)
             {
@@ -106,7 +96,7 @@ int main()
 {
     double inicio;
     double fin;
-    inicio = omp_get_wtime();
+    inicio = omp_get_wtime();//utilizar time.h en codigo secuencial
     
     char **responses = getMultipleApiData();
     saveApiData(responses);

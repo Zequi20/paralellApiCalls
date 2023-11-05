@@ -19,15 +19,12 @@ char **getMultipleApiData()
         "https://fakestoreapi.com/products/1",
         "https://pokeapi.co/api/v2/location/1/"
     };
-
     char **responses = (char **)malloc(NUM_URLS * sizeof(char *));
-
     #pragma omp parallel for
     for (int i = 0; i < NUM_URLS; i++)
     {
         responses[i] = getApiData(urls[i]);
     }
-
     return responses;
 }
 
@@ -36,21 +33,15 @@ char *getApiData(const char *url)
     CURL *curl;
     CURLcode res;
     char *response = NULL;
-
     curl_global_init(CURL_GLOBAL_ALL);
-
     curl = curl_easy_init();
     if (curl)
     {
         curl_easy_setopt(curl, CURLOPT_URL, url);
-
         response = NULL;
-
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
-
         res = curl_easy_perform(curl);
-
         if (res != CURLE_OK)
         {
             fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
@@ -58,9 +49,7 @@ char *getApiData(const char *url)
 
         curl_easy_cleanup(curl);
     }
-
     curl_global_cleanup();
-
     return response;
 }
 
@@ -72,7 +61,6 @@ void saveApiData(char **responses)
         {
             char filename[100];
             snprintf(filename, sizeof(filename), "response%d.json", i + 1);
-
             FILE *file = fopen(filename, "w");
             if (file)
             {
@@ -92,7 +80,6 @@ size_t writeCallback(void *contents, size_t size, size_t nmemb, char **output)
 {
     size_t totalSize = size * nmemb;
     *output = (char *)malloc(totalSize + 1);
-
     if (*output)
     {
         memcpy(*output, contents, totalSize);
@@ -110,11 +97,9 @@ int main()
     double inicio;
     double fin;
     inicio = omp_get_wtime();
-
     char **responses = getMultipleApiData();
     saveApiData(responses);
     free(responses);
-
     fin = omp_get_wtime();
     printf("La ejecución ha tomado %f segundos\n", fin - inicio);
     return 0;
