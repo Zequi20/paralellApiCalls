@@ -90,11 +90,11 @@ size_t writeCallback(void *contents, size_t size, size_t nmemb, char **output)
 
 int main()
 {
-    double start_time = time(NULL);
+    double startTime = time(NULL);
     char **responses = getMultipleApiData();
     saveApiData(responses);
     free(responses);
-    double end_time = time(NULL);
-    printf("La ejecucion ha tomado %f segundos\n", end_time - start_time);
+    double endTime = time(NULL);
+    printf("La ejecucion ha tomado %f segundos\n", endTime - startTime);
     return 0;
 }
