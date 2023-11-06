@@ -12,20 +12,20 @@ void saveApiData(char **responses);
 
 char **getMultipleApiData()
 {
-    char *urls[] = {
+    char *apiUrls[] = {
         "https://api.chucknorris.io/jokes/random",
         "https://rickandmortyapi.com/api/character/155",
         "https://v2.jokeapi.dev/joke/Any?lang=en",
         "https://fakestoreapi.com/products/1",
         "https://pokeapi.co/api/v2/location/1/"
     };
-    char **responses = (char **)malloc(NUM_URLS * sizeof(char *));
+    char **apiRespones = (char **)malloc(NUM_URLS * sizeof(char *));
     #pragma omp parallel for
     for (int i = 0; i < NUM_URLS; i++)
     {
-        responses[i] = getApiData(urls[i]);
+        apiRespones[i] = getApiData(apiUrls[i]);
     }
-    return responses;
+    return apiRespones;
 }
 
 char *getApiData(const char *url)

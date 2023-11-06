@@ -10,19 +10,19 @@ void saveApiData(char **responses);
 
 char **getMultipleApiData()
 {
-    char *urls[] = {
+    char *apiUrls[] = {
         "https://api.chucknorris.io/jokes/random",
         "https://rickandmortyapi.com/api/character/155",
         "https://v2.jokeapi.dev/joke/Any?lang=en",
         "https://fakestoreapi.com/products/1",
         "https://pokeapi.co/api/v2/location/1/"};
 
-    char **responses = (char **)malloc(NUM_URLS * sizeof(char *));
+    char **apiResponses = (char **)malloc(NUM_URLS * sizeof(char *));
     for (int i = 0; i < NUM_URLS; i++)
     {
-        responses[i] = getApiData(urls[i]);
+        apiResponses[i] = getApiData(apiUrls[i]);
     }
-    return responses;
+    return apiResponses;
 }
 
 char *getApiData(const char *url)
