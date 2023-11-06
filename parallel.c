@@ -3,7 +3,6 @@
 #include <curl/curl.h>
 #include <string.h>
 #include <omp.h>
-
 #define NUM_URLS 5
 
 size_t writeCallback(void *contents, size_t size, size_t nmemb, char **output);
@@ -12,7 +11,7 @@ void saveApiData(char **responses);
 
 char **getMultipleApiData()
 {
-    char *apiUrls[] = {
+    char *apiUrls[NUM_URLS] = {
         "https://api.chucknorris.io/jokes/random",
         "https://rickandmortyapi.com/api/character/155",
         "https://v2.jokeapi.dev/joke/Any?lang=en",

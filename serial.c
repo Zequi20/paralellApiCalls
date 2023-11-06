@@ -10,7 +10,7 @@ void saveApiData(char **responses);
 
 char **getMultipleApiData()
 {
-    char *apiUrls[] = {
+    char *apiUrls[NUM_URLS] = {
         "https://api.chucknorris.io/jokes/random",
         "https://rickandmortyapi.com/api/character/155",
         "https://v2.jokeapi.dev/joke/Any?lang=en",
