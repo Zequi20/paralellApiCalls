@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <curl/curl.h>
 #include <string.h>
+#include <time.h>
 #define NUM_URLS 5
 
 size_t writeCallback(void *contents, size_t size, size_t nmemb, char **output);
